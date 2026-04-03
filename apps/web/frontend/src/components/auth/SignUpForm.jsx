@@ -26,7 +26,7 @@ export default function SignUpForm() {
           Create Account
         </h1>
         <p className="text-sm text-gray-500 text-center mb-6">
-          Join and become a blood donor ❤️
+          Join and become a blood donor
         </p>
 
         {/* Social Buttons */}
@@ -100,14 +100,15 @@ export default function SignUpForm() {
           </div>
 
           {/* Gender */}
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Gender *
-            </label>
             <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+              className="w-full px-3 py-2 border rounded-md text-gray-500 focus:outline-none"
+              defaultValue=""
             >
-              <option value="">Select Gender</option>
+              <option value="" disabled>
+                Select Gender
+              </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="others">Others</option>
@@ -116,13 +117,13 @@ export default function SignUpForm() {
 
           {/* Blood Group */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Blood Group *
-            </label>
             <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+              className="w-full px-3 py-2 border rounded-md text-gray-500 focus:outline-none"
+              defaultValue=""
             >
-              <option value="">Select Blood Group</option>
+              <option value="" disabled>
+                Select Blood Group
+              </option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>

@@ -24,16 +24,16 @@ export default function SignInForm() {
 
         {/* Title */}
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
-          Welcome Back 👋
+          Welcome Back
         </h1>
         <p className="text-sm text-gray-500 mb-6">
           Sign in to continue to LifeStream
         </p>
 
         {/* Social Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-          <button className="w-full py-2.5 text-sm font-medium bg-gray-100 rounded-lg hover:bg-gray-200 transition">
-            Google
+        <div className="grid grid-cols-1 gap-3 mb-5">
+          <button className="flex items-center justify-center gap-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+            Sign in with Google
           </button>
         </div>
 
@@ -81,41 +81,6 @@ export default function SignInForm() {
                 )}
               </span>
             </div>
-          </div>
-
-          {/* Gender */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Gender *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="others">Others</option>
-            </select>
-          </div>
-
-          {/* Blood Group */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Blood Group *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
           </div>
 
           {/* Remember + Forgot */}

@@ -1,37 +1,31 @@
 import React from 'react'
-import { FaFacebook, FaInstagram, FaSnapchat, FaTwitter } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { Link } from 'react-router'
 
 const Footer = () => {
   return (
     <footer className="bg-red-600 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
         {/* About Section */}
-        <div>
-          <img
-            src="/logo.png"
-            alt="BloodDonate Logo"
-            className="h-20 w-auto object-contain"
-          />
-          <p className="text-white/80 text-sm">
+        <div className="space-y-3">
+          <h2 className="text-2xl font-bold">LifeStream</h2>
+          <p className="text-white/80 text-sm leading-relaxed">
             LifeStream is a platform to connect donors and receivers safely.
             Join us to save lives and make a difference in your community.
           </p>
         </div>
 
         {/* Contact */}
-        <div>
-          <h4 className="text-xl font-bold mb-4">Contact</h4>
-          <ul className="space-y-2 text-white/80 text-sm">
+        <div className="md:text-right space-y-3">
+          <h4 className="text-xl font-bold">Contact</h4>
+          <ul className="text-white/80 text-sm space-y-1">
             <li>Email: support@LifeStream.com</li>
             <li>Phone: +880 1234 567890</li>
           </ul>
-        </div>
 
-        {/* Social Media */}
-        <div>
-          <h4 className="text-xl font-bold mb-4">Follow Us</h4>
-          <div className="flex space-x-4 text-white">
+          {/* Social Icons */}
+          <div className="flex md:justify-end space-x-4 text-lg pt-2">
             <a href="#" className="hover:text-red-200 transition">
               <FaFacebook />
             </a>
@@ -43,6 +37,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
+
       </div>
 
       {/* Bottom Footer */}

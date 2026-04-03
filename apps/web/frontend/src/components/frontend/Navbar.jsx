@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router";
 
@@ -6,12 +7,10 @@ const Navbar = () => {
     <header className="bg-red-600 text-white shadow-md sticky top-0 w-full z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-        {/* Logo */}
-        <img
-          src="/logo.png"
-          alt="BloodDonate Logo"
-          className="h-20 w-auto object-contain"
-        />
+        {/* Logo / Heading */}
+        <h1 className="text-2xl md:text-3xl font-bold tracking-wide">
+          LifeStream
+        </h1>
 
         {/* Nav Links */}
         <nav className="space-x-6 flex items-center">
