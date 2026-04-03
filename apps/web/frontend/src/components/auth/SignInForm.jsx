@@ -35,9 +35,6 @@ export default function SignInForm() {
           <button className="w-full py-2.5 text-sm font-medium bg-gray-100 rounded-lg hover:bg-gray-200 transition">
             Google
           </button>
-          <button className="w-full py-2.5 text-sm font-medium bg-gray-100 rounded-lg hover:bg-gray-200 transition">
-            X
-          </button>
         </div>
 
         {/* Divider */}
