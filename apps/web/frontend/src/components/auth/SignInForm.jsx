@@ -9,7 +9,7 @@ export default function SignInForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-      
+
       {/* Card */}
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
 
@@ -27,7 +27,7 @@ export default function SignInForm() {
           Welcome Back 👋
         </h1>
         <p className="text-sm text-gray-500 mb-6">
-          Sign in to continue to BloodDonate
+          Sign in to continue to LifeStream
         </p>
 
         {/* Social Buttons */}
@@ -49,7 +49,7 @@ export default function SignInForm() {
 
         {/* Form */}
         <form className="space-y-5">
-          
+
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -84,6 +84,41 @@ export default function SignInForm() {
                 )}
               </span>
             </div>
+          </div>
+
+          {/* Gender */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Gender *
+            </label>
+            <select
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="others">Others</option>
+            </select>
+          </div>
+
+          {/* Blood Group */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Blood Group *
+            </label>
+            <select
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+            >
+              <option value="">Select Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
           </div>
 
           {/* Remember + Forgot */}
