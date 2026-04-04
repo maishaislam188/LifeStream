@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="md:text-right space-y-3">
           <h4 className="text-xl font-bold">Contact</h4>
           <ul className="text-white/80 text-sm space-y-1">
-            <li>Email: support@LifeStream.com</li>
+            <li>Email: support@lifestream.com</li>
             <li>Phone: +880 1234 567890</li>
           </ul>
 

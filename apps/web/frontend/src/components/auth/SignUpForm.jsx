@@ -29,21 +29,6 @@ export default function SignUpForm() {
           Join and become a blood donor
         </p>
 
-        {/* Social Buttons */}
-        <div className="grid grid-cols-1 gap-3 mb-5">
-          <button className="flex items-center justify-center gap-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
-            Sign up with Google
-          </button>
-        </div>
-
-        {/* Divider */}
-        <div className="relative my-4">
-          <div className="border-t"></div>
-          <span className="absolute left-1/2 -translate-x-1/2 -top-3 bg-white px-2 text-sm text-gray-400">
-            OR
-          </span>
-        </div>
-
         {/* Form */}
         <form className="space-y-4">
           {/* Name */}

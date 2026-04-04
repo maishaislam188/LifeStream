@@ -30,20 +30,6 @@ export default function SignInForm() {
           Sign in to continue to LifeStream
         </p>
 
-        {/* Social Buttons */}
-        <div className="grid grid-cols-1 gap-3 mb-5">
-          <button className="flex items-center justify-center gap-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
-            Sign in with Google
-          </button>
-        </div>
-
-        {/* Divider */}
-        <div className="flex items-center mb-5">
-          <div className="flex-grow border-t"></div>
-          <span className="mx-3 text-gray-400 text-sm">Or</span>
-          <div className="flex-grow border-t"></div>
-        </div>
-
         {/* Form */}
         <form className="space-y-5">
 
@@ -81,26 +67,6 @@ export default function SignInForm() {
                 )}
               </span>
             </div>
-          </div>
-
-          {/* Remember + Forgot */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={() => setIsChecked(!isChecked)}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              Keep me logged in
-            </label>
-
-            <Link
-              to="/reset-password"
-              className="text-sm text-red-600 hover:text-red-700"
-            >
-              Forgot password?
-            </Link>
           </div>
 
           {/* Submit */}
