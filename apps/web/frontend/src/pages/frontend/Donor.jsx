@@ -12,7 +12,7 @@ const donorsData = [
     bloodGroup: "A+",
     address: "Dhaka",
     phone: "+880 1234 567890",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
+    image: "https://img.freepik.com/premium-vector/male-profile-icon_1076610-16621.jpg",
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const donorsData = [
     bloodGroup: "B+",
     address: "Chittagong",
     phone: "+880 9876 543210",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    image: "https://cdn1.iconfinder.com/data/icons/avatars-1-5/136/61-1024.png",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const donorsData = [
     bloodGroup: "O-",
     address: "Sylhet",
     phone: "+880 1122 334455",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
+    image: "https://cdn3.iconfinder.com/data/icons/avatars-collection/256/47-1024.png",
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const donorsData = [
     bloodGroup: "AB+",
     address: "Rajshahi",
     phone: "+880 5566 778899",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    image: "https://cdn4.iconfinder.com/data/icons/business-conceptual-part1-1/513/business-woman-512.png",
   },
 ];
 
