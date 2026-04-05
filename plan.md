@@ -146,20 +146,19 @@ React (Frontend) → Express API (Backend) → MongoDB (Database)
 * Password hashing
 
 ---
-
-### Phase 3 — Donor Module
-
-* Create donor profile
-* Update availability
-* View donor details
-
----
-
-### Phase 4 — Search System
+### Phase 3 — Search System
 
 * Filter donors by blood group
 * Filter by location
 * Display results
+
+---
+
+### Phase 4 — Donor Module
+
+* Create donor profile
+* Update availability
+* View donor details
 
 ---
 
