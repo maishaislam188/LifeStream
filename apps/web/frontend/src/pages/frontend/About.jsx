@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import Navbar from "../../components/frontend/Navbar";
 import Footer from "../../components/frontend/Footer";
 import heroImage from "../../assets/hero.jpeg";
-import banner from "../../assets/banner.jpg";
+import banner from "../../assets/banner.avif";
 
 export default function About() {
     return (
