@@ -46,13 +46,64 @@ export default function SignUpForm() {
     try {
       // আপনার ব্যাকএন্ডের সাইন-আপ রুটে ডাটা পাঠানো হচ্ছে
       const res = await axios.post("http://localhost:5000/signup", formData);
-      
+
       if (res.data.success) {
         alert("Registration Successful!");
         navigate("/signin"); // সফল হলে লগইন পেজে নিয়ে যাবে
       }
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed. Try again.");
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!isChecked) {
+      setError("Please accept terms & conditions");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: "patient",
+        bloodGroup: formData.bloodGroup,
+        gender: formData.gender,
+      };
+
+      await axios.post("http://localhost:5000/signup", payload);
+
+      navigate("/signin");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
     }
   };
 
