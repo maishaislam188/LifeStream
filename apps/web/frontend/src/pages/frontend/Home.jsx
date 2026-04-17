@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import heroImage from "../../assets/hero.jpeg";
-import banner from "../../assets/banner.jpg";
+import banner from "../../assets/banner.avif";
 import Navbar from "../../components/frontend/Navbar";
 import Footer from "../../components/frontend/Footer";
 
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="font-sans text-gray-900">
       {/* Navbar */}
-     <Navbar />
+      <Navbar />
 
       {/* Hero Section */}
       <section
@@ -74,7 +74,7 @@ export default function Home() {
             lives. Join our platform to make a real impact.
           </p>
           <Link
-            to="/login"
+            to="/donors"
             className="bg-white text-red-600 px-6 py-3 font-semibold rounded hover:bg-gray-100 transition"
           >
             Become a Donor
@@ -84,16 +84,16 @@ export default function Home() {
 
       {/* Get Involved */}
       <section className="max-w-7xl mx-auto py-20 px-4">
-        <h3 className="text-3xl font-bold text-center mb-12">Get Involved</h3>
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div>
+          <div className="flex justify-center">
             <img
               src={banner}
               alt="Blood Donation"
-              className="rounded shadow-lg"
+              className="w-80 rounded shadow-lg"
             />
           </div>
           <div>
+            <h3 className="text-3xl font-bold mb-4">Get Involved</h3>
             <p className="text-lg mb-4">
               Register as a donor and securely provide your details. Patients
               can request blood, but only after login.
@@ -103,7 +103,7 @@ export default function Home() {
               community now.
             </p>
             <Link
-              to="/login"
+              to="/signin"
               className="bg-red-600 text-white px-6 py-3 font-semibold rounded hover:bg-red-700 transition"
             >
               Register / Login
@@ -113,7 +113,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-     <Footer />
+      <Footer />
     </div>
   );
 }

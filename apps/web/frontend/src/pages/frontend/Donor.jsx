@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiMapPin, FiPhone } from "react-icons/fi";
+import { useNavigate } from "react-router";
 import heroImage from "../../assets/hero.jpeg";
 import Footer from "../../components/frontend/Footer";
 import Navbar from "../../components/frontend/Navbar";
@@ -7,19 +8,19 @@ import Navbar from "../../components/frontend/Navbar";
 const donorsData = [
   {
     id: 1,
-    name: "John Doe",
+    name: "Mahdi Rahman",
     bloodGroup: "A+",
     address: "Dhaka",
     phone: "+880 1234 567890",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
+    image: "https://img.freepik.com/premium-vector/male-profile-icon_1076610-16621.jpg",
   },
   {
     id: 2,
-    name: "Jane Smith",
+    name: "Nusrat Jahan",
     bloodGroup: "B+",
     address: "Chittagong",
     phone: "+880 9876 543210",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    image: "https://cdn1.iconfinder.com/data/icons/avatars-1-5/136/61-1024.png",
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const donorsData = [
     bloodGroup: "O-",
     address: "Sylhet",
     phone: "+880 1122 334455",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
+    image: "https://cdn3.iconfinder.com/data/icons/avatars-collection/256/47-1024.png",
   },
   {
     id: 4,
@@ -35,56 +36,36 @@ const donorsData = [
     bloodGroup: "AB+",
     address: "Rajshahi",
     phone: "+880 5566 778899",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    id: 1,
-    name: "John Doe",
-    bloodGroup: "A+",
-    address: "Dhaka",
-    phone: "+880 1234 567890",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    bloodGroup: "B+",
-    address: "Chittagong",
-    phone: "+880 9876 543210",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
-  },
-  {
-    id: 3,
-    name: "Ali Hasan",
-    bloodGroup: "O-",
-    address: "Sylhet",
-    phone: "+880 1122 334455",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
-  },
-  {
-    id: 4,
-    name: "Fatema Akter",
-    bloodGroup: "AB+",
-    address: "Rajshahi",
-    phone: "+880 5566 778899",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    image: "https://cdn4.iconfinder.com/data/icons/business-conceptual-part1-1/513/business-woman-512.png",
   },
 ];
 
 export default function Donors() {
-  const [bloodGroup, setBloodGroup] = useState("");
+  const navigate = useNavigate();
+
+  // Input states (typing)
+  const [blood, setBlood] = useState("");
   const [location, setLocation] = useState("");
 
-  const filteredDonors = donorsData.filter(
-    (donor) =>
-      (bloodGroup === "" || donor.bloodGroup === bloodGroup) &&
-      (location === "" ||
-        donor.address.toLowerCase().includes(location.toLowerCase()))
-  );
+  // Applied filters (after clicking search)
+  const [filterBlood, setFilterBlood] = useState("");
+  const [filterLocation, setFilterLocation] = useState("");
+
+  // Filter logic (ONLY uses applied filters)
+  const filteredDonors = donorsData.filter((donor) => {
+    const matchesBlood = filterBlood === "" || donor.bloodGroup === filterBlood;
+
+    const matchesLocation =
+      filterLocation === "" ||
+      donor.address.toLowerCase().includes(filterLocation.toLowerCase());
+
+    return matchesBlood && matchesLocation;
+  });
 
   return (
-    <div className="font-sans text-gray-900">
+    <div className="font-sans text-gray-900 min-h-screen flex flex-col">
       <Navbar />
+
       {/* Hero Section */}
       <section
         className="relative flex items-center justify-center h-[50vh] text-center"
@@ -104,107 +85,132 @@ export default function Donors() {
         </div>
       </section>
 
-      {/* Full-width Search */}
-      <section className="bg-red-50 py-8 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4">
-          <input
-            type="text"
-            placeholder="Search by blood group or location"
-            className="flex-1 border border-red-300 rounded px-4 py-3 focus:ring-2 focus:ring-red-400 focus:outline-none"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <button
-            className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700 transition font-semibold"
-            onClick={() => {}}
-          >
-            Search
-          </button>
-        </div>
-      </section>
-
-      {/* Main Content: Filter Sidebar + Donor Cards */}
-      <div className="max-w-7xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-8">
-        {/* Left Filter Sidebar */}
-        <div className="md:w-1/4 bg-white p-6 rounded-lg shadow-md sticky top-24 h-fit">
-          <h2 className="text-xl font-bold mb-4 text-red-600">Filter Donors</h2>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 py-12 flex gap-8">
+        {/* Sidebar (FIXED WIDTH) */}
+        <div className="w-[280px] bg-white p-6 rounded-lg shadow-md sticky top-24 h-fit">
+          <h2 className="text-xl font-bold mb-4 text-red-600">Search Donors</h2>
 
           <div className="flex flex-col gap-4">
+            {/* Blood Group */}
             <div>
               <label className="block mb-1 font-semibold">Blood Group</label>
               <select
-                className="w-full border border-red-300 rounded px-4 py-2 focus:ring-2 focus:ring-red-400 focus:outline-none"
-                value={bloodGroup}
-                onChange={(e) => setBloodGroup(e.target.value)}
+                className="w-full border border-red-300 rounded px-4 py-2"
+                value={blood}
+                onChange={(e) => setBlood(e.target.value)}
               >
                 <option value="">All Groups</option>
                 <option value="A+">A+</option>
-                <option value="A-">A-</option>
                 <option value="B+">B+</option>
-                <option value="B-">B-</option>
                 <option value="O+">O+</option>
-                <option value="O-">O-</option>
                 <option value="AB+">AB+</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="O-">O-</option>
                 <option value="AB-">AB-</option>
               </select>
             </div>
 
+            {/* Location */}
             <div>
               <label className="block mb-1 font-semibold">Location</label>
               <input
                 type="text"
                 placeholder="Enter location"
-                className="w-full border border-red-300 rounded px-4 py-2 focus:ring-2 focus:ring-red-400 focus:outline-none"
+                className="w-full border border-red-300 rounded px-4 py-2"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
 
+            {/* Search Button */}
             <button
               className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-semibold"
-              onClick={() => {}}
+              onClick={() => {
+                setFilterBlood(blood);
+                setFilterLocation(location);
+              }}
             >
-              Apply Filters
+              Search
             </button>
           </div>
         </div>
 
-        {/* Right Donor Cards */}
-        <div className="flex-1 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredDonors.length > 0 ? (
-            filteredDonors.map((donor) => (
-              <div
-                key={donor.id}
-                className="bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-md p-6 hover:shadow-xl transform hover:scale-105 transition duration-300"
-              >
-                <div className="flex justify-center mb-4">
-                  <img
-                    src={donor.image}
-                    alt={donor.name}
-                    className="w-24 h-24 rounded-full border-4 border-red-600 object-cover"
-                  />
+        {/* Right Content */}
+        <div className="flex-1 min-h-[500px]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredDonors.length > 0 ? (
+              filteredDonors.map((donor) => (
+                <div
+                  key={donor.id}
+                  className="bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-md p-6 hover:shadow-xl transform hover:scale-105 transition duration-300"
+                >
+                  <div className="flex justify-center mb-4">
+                    <img
+                      src={donor.image}
+                      alt={donor.name}
+                      className="w-24 h-24 rounded-full border-4 border-red-600 object-cover"
+                    />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-2 text-red-700 text-center">
+                    {donor.name}
+                  </h3>
+
+                  <p className="text-center mb-3">
+                    <span className="bg-red-600 text-white px-3 py-1 rounded-full font-semibold">
+                      {donor.bloodGroup}
+                    </span>
+                  </p>
+
+                  <p className="flex items-center justify-center text-gray-700">
+                    <FiMapPin className="mr-2 text-red-500" />
+                    {donor.address}
+                  </p>
+
+                  <p className="flex items-center justify-center text-gray-700 mb-4">
+                    <FiPhone className="mr-2 text-red-500" />
+                    {donor.phone}
+                  </p>
+                  <a
+                    href={`tel:${donor.phone}`}
+                    className="block text-center bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+                  >
+                    Request
+                  </a>
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-red-700 text-center">
-                  {donor.name}
+              ))
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-20 bg-red-50 rounded-lg shadow-md min-h-[300px]">
+                <h3 className="text-2xl font-bold text-red-600 mb-2">
+                  No donors found
                 </h3>
-                <p className="text-center mb-3">
-                  <span className="inline-block bg-red-600 text-white px-3 py-1 rounded-full font-semibold">
-                    {donor.bloodGroup}
-                  </span>
-                </p>
-                <p className="flex items-center mb-1 text-gray-700 justify-center">
-                  <FiMapPin className="mr-2 text-red-500" /> {donor.address}
-                </p>
-                <p className="flex items-center text-gray-700 justify-center">
-                  <FiPhone className="mr-2 text-red-500" /> {donor.phone}
+                <p className="text-gray-500 text-center max-w-xs">
+                  Sorry, we couldn’t find any donors matching your filter.
                 </p>
               </div>
-            ))
-          ) : (
-            <p className="text-center col-span-4 text-gray-500">
-              No donors found matching your search.
+            )}
+          </div>
+
+          {/* Be a Donor Section */}
+          <div className="mt-12 bg-red-50 rounded-lg shadow-md py-10 flex flex-col items-center justify-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-3">
+              Want to Save Lives?
+            </h2>
+
+            <p className="text-gray-600 mb-6 text-center max-w-md">
+              Join our community of heroes. Register yourself as a blood donor
+              and help people in need.
             </p>
-          )}
+
+            <button
+              onClick={() => navigate("/profile")}
+              className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition"
+            >
+              Be a Donor
+            </button>
+          </div>
         </div>
       </div>
 

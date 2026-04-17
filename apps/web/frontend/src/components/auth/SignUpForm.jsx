@@ -1,18 +1,71 @@
 import { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { BsChevronLeft } from "react-icons/bs";
-import { Link } from "react-router";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!isChecked) {
+      setError("Please accept terms & conditions");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: "patient",
+        bloodGroup: formData.bloodGroup,
+        gender: formData.gender,
+      };
+
+      await axios.post("http://localhost:5000/signup", payload);
+
+      navigate("/signin");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
 
-        {/* Back Button */}
+        {/* Back */}
         <Link
           to="/"
           className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4"
@@ -21,58 +74,63 @@ export default function SignUpForm() {
           Back to home
         </Link>
 
-        {/* Heading */}
-        <h1 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-center mb-2">
           Create Account
         </h1>
-        <p className="text-sm text-gray-500 text-center mb-6">
-          Join and become a blood donor ❤️
+        <p className="text-sm text-gray-500 text-center mb-4">
+          Join and become a blood donor
         </p>
 
-        {/* Social Buttons */}
-        <div className="grid grid-cols-1 gap-3 mb-5">
-          <button className="flex items-center justify-center gap-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
-            Sign up with Google
-          </button>
-        </div>
-
-        {/* Divider */}
-        <div className="relative my-4">
-          <div className="border-t"></div>
-          <span className="absolute left-1/2 -translate-x-1/2 -top-3 bg-white px-2 text-sm text-gray-400">
-            OR
-          </span>
-        </div>
+        {/* Error */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">
+            {error}
+          </p>
+        )}
 
         {/* Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+
           {/* Name */}
           <div className="grid grid-cols-2 gap-3">
             <input
               type="text"
+              name="firstName"
               placeholder="First Name"
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
+              required
             />
             <input
               type="text"
+              name="lastName"
               placeholder="Last Name"
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
+              required
             />
           </div>
 
           {/* Email */}
           <input
             type="email"
+            name="email"
             placeholder="Email Address"
+            onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
+            required
           />
 
           {/* Password */}
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="Password"
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
+              required
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -86,8 +144,11 @@ export default function SignUpForm() {
           <div className="relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
               placeholder="Confirm Password"
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
+              required
             />
             <span
               onClick={() =>
@@ -100,39 +161,35 @@ export default function SignUpForm() {
           </div>
 
           {/* Gender */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Gender *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="others">Others</option>
-            </select>
-          </div>
+          <select
+            name="gender"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="others">Others</option>
+          </select>
 
           {/* Blood Group */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Blood Group *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
-          </div>
+          <select
+            name="bloodGroup"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+            required
+          >
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
 
           {/* Checkbox */}
           <div className="flex items-center gap-2">
@@ -147,7 +204,10 @@ export default function SignUpForm() {
           </div>
 
           {/* Submit */}
-          <button className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition">
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
+          >
             Sign Up
           </button>
         </form>
@@ -159,6 +219,7 @@ export default function SignUpForm() {
             Sign In
           </Link>
         </p>
+
       </div>
     </div>
   );
