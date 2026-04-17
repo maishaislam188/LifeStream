@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import React, { useState } from "react";
 import { FiMapPin, FiPhone } from "react-icons/fi";
 import { useNavigate } from "react-router";

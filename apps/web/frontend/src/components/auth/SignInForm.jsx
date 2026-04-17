@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoChevronBack } from "react-icons/io5";
+import axios from "axios";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,15 +52,9 @@ export default function SignInForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-
-      {/* Card */}
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
 
-        {/* Back */}
-        <Link
-          to="/"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-red-600 mb-4"
-        >
+        <Link to="/" className="inline-flex items-center text-sm text-gray-500 hover:text-red-600 mb-4">
           <IoChevronBack className="mr-1" />
           Back to home
         </Link>
@@ -82,11 +77,9 @@ export default function SignInForm() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Email */}
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
             <input
               type="email"
               name="email"
@@ -98,7 +91,6 @@ export default function SignInForm() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password *
@@ -128,23 +120,17 @@ export default function SignInForm() {
             </div>
           </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition shadow-md"
-          >
+          <button type="submit" className="w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition shadow-md">
             Sign In
           </button>
         </form>
 
-        {/* Footer */}
         <p className="text-sm text-center text-gray-600 mt-6">
           Don’t have an account?{" "}
           <Link to="/signup" className="text-red-600 font-medium">
             Sign Up
           </Link>
         </p>
-
       </div>
     </div>
   );
