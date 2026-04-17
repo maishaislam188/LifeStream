@@ -1,8 +1,8 @@
 import { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { BsChevronLeft } from "react-icons/bs";
-import { Link, useNavigate } from "react-router"; // রুট পরিবর্তন করার জন্য
-import axios from "axios";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,25 +56,94 @@ export default function SignUpForm() {
     }
   };
 
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!isChecked) {
+      setError("Please accept terms & conditions");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: "patient",
+        bloodGroup: formData.bloodGroup,
+        gender: formData.gender,
+      };
+
+      await axios.post("http://localhost:5000/signup", payload);
+
+      navigate("/signin");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
 
-        <Link to="/" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
-          <BsChevronLeft className="size-5" /> Back to home
+        {/* Back */}
+        <Link
+          to="/"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4"
+        >
+          <BsChevronLeft className="size-5" />
+          Back to home
         </Link>
 
-        <h1 className="text-2xl font-bold text-gray-800 mb-2 text-center">Create Account</h1>
-        <p className="text-sm text-gray-500 text-center mb-6">Join and become a blood donor</p>
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-center mb-2">
+          Create Account
+        </h1>
+        <p className="text-sm text-gray-500 text-center mb-4">
+          Join and become a blood donor
+        </p>
 
-        {/* এরর মেসেজ দেখানোর জন্য */}
-        {error && <p className="text-red-500 text-sm text-center mb-4 bg-red-50 p-2 rounded">{error}</p>}
+        {/* Error */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">
+            {error}
+          </p>
+        )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Name */}
           <div className="grid grid-cols-2 gap-3">
             <input
               type="text"
-              name="firstName" // name অবশ্যই আপনার backend ফিল্ডের সাথে মিলতে হবে
+              name="firstName"
               placeholder="First Name"
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
@@ -127,14 +196,26 @@ export default function SignUpForm() {
             </span>
           </div>
 
-          <select name="gender" onChange={handleChange} className="w-full px-3 py-2 border rounded-md text-gray-500" required>
+          {/* Gender */}
+          <select
+            name="gender"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+            required
+          >
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="others">Others</option>
           </select>
 
-          <select name="bloodGroup" onChange={handleChange} className="w-full px-3 py-2 border rounded-md text-gray-500" required>
+          {/* Blood Group */}
+          <select
+            name="bloodGroup"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+            required
+          >
             <option value="">Select Blood Group</option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
@@ -145,31 +226,6 @@ export default function SignUpForm() {
             <option value="O+">O+</option>
             <option value="O-">O-</option>
           </select>
-          {/* Location Input */}
-<div>
-  <input
-    type="text"
-    name="location"
-    placeholder="Enter your location (e.g. Sylhet)"
-    className="w-full border border-gray-300 rounded px-4 py-2"
-    value={formData.location}
-    onChange={handleChange}
-    required
-  />
-</div>
-
-{/* Role Selection (Optional) */}
-<div>
-  <select
-    name="role"
-    className="w-full border border-gray-300 rounded px-4 py-2"
-    value={formData.role}
-    onChange={handleChange}
-  >
-    <option value="donor">Join as Donor</option>
-    <option value="recipient">Join as Recipient</option>
-  </select>
-</div>
 
           <div className="flex items-center gap-2">
             <input
@@ -180,7 +236,11 @@ export default function SignUpForm() {
             <p className="text-sm text-gray-500">I agree to Terms & Privacy</p>
           </div>
 
-          <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition">
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
+          >
             Sign Up
           </button>
         </form>
@@ -189,6 +249,7 @@ export default function SignUpForm() {
           Already have an account?{" "}
           <Link to="/signin" className="text-red-600 font-medium">Sign In</Link>
         </p>
+
       </div>
     </div>
   );
