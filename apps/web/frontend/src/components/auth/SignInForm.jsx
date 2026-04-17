@@ -77,60 +77,48 @@ export default function SignInForm() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
 
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="info@gmail.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password *
-            </label>
-
-            <div className="relative">
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
               <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter your password"
+                placeholder="info@gmail.com"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                 required
               />
-
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-              >
-                {showPassword ? (
-                  <FaEye className="text-gray-500" />
-                ) : (
-                  <FaEyeSlash className="text-gray-500" />
-                )}
-              </span>
             </div>
-          </div>
 
-          <button type="submit" className="w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition shadow-md">
-            Sign In
-          </button>
-        </form>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password *
+              </label>
 
-        <p className="text-sm text-center text-gray-600 mt-6">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-red-600 font-medium">
-            Sign Up
-          </Link>
-        </p>
+              <div className="relative">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="info@gmail.com"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                  required
+                />
+              </div>
+
+              <button type="submit" className="w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition shadow-md">
+                Sign In
+              </button>
+          </form>
+
+          <p className="text-sm text-center text-gray-600 mt-6">
+            Don’t have an account?{" "}
+            <Link to="/signup" className="text-red-600 font-medium">
+              Sign Up
+            </Link>
+          </p>
       </div>
     </div>
   );
