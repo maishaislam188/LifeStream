@@ -1,10 +1,43 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import axios from "axios";
 import heroImage from "../../assets/hero.jpeg";
 import banner from "../../assets/banner.jpg";
 import Navbar from "../../components/frontend/Navbar";
 import Footer from "../../components/frontend/Footer";
+import EmergencyRequests from "../../components/EmergencyRequests";
 
 export default function Home() {
+  // মডাল এবং ফর্ম ডেটার জন্য স্টেট
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    bloodGroup: "",
+    hospital: "",
+    bagsNeeded: "",
+    location: "",
+    contact: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // ব্যাকএন্ডে ইমার্জেন্সি রিকোয়েস্ট সেভ করা হচ্ছে
+      const res = await axios.post("http://localhost:5000/emergency-requests", formData);
+      if (res.data.success) {
+        alert("Emergency Request Posted Successfully!");
+        setShowModal(false);
+        window.location.reload(); // নতুন পোস্ট দেখানোর জন্য রিফ্রেশ
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong!");
+    }
+  };
+
   return (
     <div className="font-sans text-gray-900">
       {/* Navbar */}
@@ -24,8 +57,7 @@ export default function Home() {
             Donate Blood, Save Lives
           </h2>
           <p className="text-white mb-6 text-lg">
-            Join our community. Become a donor or request blood for those in
-            need.
+            Join our community. Become a donor or request blood for those in need.
           </p>
           <div className="flex justify-center gap-4">
             <Link
@@ -43,6 +75,47 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Emergency Requests Section */}
+      <div className="bg-white py-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <EmergencyRequests />
+          
+          {/* --- নতুন পোস্ট করার বাটন --- */}
+          <div className="mt-8 p-6 border-2 border-dashed border-red-200 rounded-xl bg-red-50 text-center">
+             <p className="text-gray-600 mb-4 font-medium">Do you need an emergency blood request? Post your request here.</p>
+             <button 
+               onClick={() => setShowModal(true)}
+               className="bg-red-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-red-700 transition shadow-md"
+             >
+               Post Emergency Request
+             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* --- Emergency Request Modal (Pop-up Form) --- */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full relative">
+            <button 
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-black text-xl"
+            >✕</button>
+            <h2 className="text-2xl font-bold text-red-600 mb-6 text-center">Emergency Blood Request</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input name="bloodGroup" placeholder="Blood Group (e.g. A+)" onChange={handleChange} required className="w-full p-2 border rounded" />
+              <input name="hospital" placeholder="Hospital Name" onChange={handleChange} required className="w-full p-2 border rounded" />
+              <input name="bagsNeeded" placeholder="Bags Needed" type="number" onChange={handleChange} required className="w-full p-2 border rounded" />
+              <input name="location" placeholder="Location" onChange={handleChange} required className="w-full p-2 border rounded" />
+              <input name="contact" placeholder="Contact Number" onChange={handleChange} required className="w-full p-2 border rounded" />
+              <button type="submit" className="w-full bg-red-600 text-white py-3 rounded font-bold hover:bg-red-700 transition">
+                Submit Post
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* How It Works */}
       <section className="max-w-7xl mx-auto py-20 px-4">
