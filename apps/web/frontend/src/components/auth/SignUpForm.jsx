@@ -8,6 +8,155 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+
+  // ১. সব ইনপুট ডাটা রাখার জন্য State
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  // ২. ইনপুট হ্যান্ডেলার ফাংশন
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // ৩. ব্যাকএন্ডে ডাটা পাঠানোর ফাংশন
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    // পাসওয়ার্ড ম্যাচিং চেক
+    if (formData.password !== formData.confirmPassword) {
+      return setError("Passwords do not match!");
+    }
+
+    // টার্মস অ্যান্ড কন্ডিশন চেক
+    if (!isChecked) {
+      return setError("Please agree to our Terms & Privacy.");
+    }
+
+    try {
+      // আপনার ব্যাকএন্ডের সাইন-আপ রুটে ডাটা পাঠানো হচ্ছে
+      const res = await axios.post("http://localhost:5000/signup", formData);
+
+      if (res.data.success) {
+        alert("Registration Successful!");
+        navigate("/signin"); // সফল হলে লগইন পেজে নিয়ে যাবে
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed. Try again.");
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!isChecked) {
+      setError("Please accept terms & conditions");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: "patient",
+        bloodGroup: formData.bloodGroup,
+        gender: formData.gender,
+      };
+
+      await axios.post("http://localhost:5000/signup", payload);
+
+      navigate("/signin");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    bloodGroup: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!isChecked) {
+      setError("Please accept terms & conditions");
+      return;
+    }
+
+    try {
+      const payload = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: "patient",
+        bloodGroup: formData.bloodGroup,
+        gender: formData.gender,
+      };
+
+      await axios.post("http://localhost:5000/signup", payload);
+
+      navigate("/signin");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -112,7 +261,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Email */}
           <input
             type="email"
             name="email"
@@ -122,7 +270,6 @@ export default function SignUpForm() {
             required
           />
 
-          {/* Password */}
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -132,15 +279,11 @@ export default function SignUpForm() {
               className="w-full px-3 py-2 border rounded-md"
               required
             />
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-            >
+            <span onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
               {showPassword ? <HiEye /> : <HiEyeOff />}
             </span>
           </div>
 
-          {/* Confirm Password */}
           <div className="relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
@@ -150,12 +293,7 @@ export default function SignUpForm() {
               className="w-full px-3 py-2 border rounded-md"
               required
             />
-            <span
-              onClick={() =>
-                setShowConfirmPassword(!showConfirmPassword)
-              }
-              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-            >
+            <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
               {showConfirmPassword ? <HiEye /> : <HiEyeOff />}
             </span>
           </div>
@@ -191,16 +329,13 @@ export default function SignUpForm() {
             <option value="O-">O-</option>
           </select>
 
-          {/* Checkbox */}
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
               checked={isChecked}
               onChange={() => setIsChecked(!isChecked)}
             />
-            <p className="text-sm text-gray-500">
-              I agree to Terms & Privacy
-            </p>
+            <p className="text-sm text-gray-500">I agree to Terms & Privacy</p>
           </div>
 
           {/* Submit */}
@@ -212,12 +347,9 @@ export default function SignUpForm() {
           </button>
         </form>
 
-        {/* Footer */}
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
-          <Link to="/signin" className="text-red-600 font-medium">
-            Sign In
-          </Link>
+          <Link to="/signin" className="text-red-600 font-medium">Sign In</Link>
         </p>
 
       </div>

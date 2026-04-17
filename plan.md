@@ -146,20 +146,19 @@ React (Frontend) → Express API (Backend) → MongoDB (Database)
 * Password hashing
 
 ---
-
-### Phase 3 — Donor Module
-
-* Create donor profile
-* Update availability
-* View donor details
-
----
-
-### Phase 4 — Search System
+### Phase 3 — Search System
 
 * Filter donors by blood group
 * Filter by location
 * Display results
+
+---
+
+### Phase 4 — Donor Module
+
+* Create donor profile
+* Update availability
+* View donor details
 
 ---
 
@@ -190,47 +189,86 @@ React (Frontend) → Express API (Backend) → MongoDB (Database)
 ## 9. Folder Structure
 
 LifeStream/
- └── apps/
-      ├── web/
-      │    ├── app/
-      │    │    ├── api/
-      │    │    │    └── test/
-      │    │    │         └── route.js
-      │    │   
-      │    │    
-      │    │
-      │    ├── lib/
-      │    │    └── mongodb.js
-      │    │
-      │    ├── models/
-      │    │    
-      │    │
-      │    ├── node_modules/
-      │    ├── public/
-      │    ├── .env.local   (later)
-      │    ├── package.json
-      │    └── ...
-      │
-      └── admin/
-           ├── app/
-           │    ├── api/
-           │    │    └── test/
-           │    │         └── route.js
-           │    
-           │    
-           │
-           ├── lib/
-           │    └── mongodb.js
-           │
-           ├── models/
-           │    
-           │
-           ├── node_modules/
-           ├── public/
-           ├── .env.local   (later)
-           ├── package.json
-           └── ...
-
+│
+├── apps/
+│   │
+│   ├── web/              
+│   │   │
+│   │   ├── frontend/           
+│   │   │   ├── public/
+│   │   │   ├── src/
+│   │   │   │   ├── assets/
+│   │   │   │   ├── components/
+│   │   │   │   │   ├── frontend/
+│   │   │   │   │   ├── common/
+                    ├── auth/
+│   │   │   │   ├── pages/
+│   │   │   │   │   ├── Home.jsx
+│   │   │   │   │   ├── About.jsx
+│   │   │   │   │   ├── SignIn.jsx
+│   │   │   │   │   ├── SignUp.jsx
+│   │   │   │   │   ├── Donors.jsx
+│   │   │   │   ├── routes/
+│   │   │   │   ├── hooks/
+│   │   │   │   ├── context/
+│   │   │   │   ├── services/     
+│   │   │   │   ├── utils/
+│   │   │   │   ├── App.jsx
+│   │   │   │   ├── main.jsx
+│   │   │   │
+│   │   │   ├── package.json
+│   │   │
+│   │   ├── backend/
+│   │       ├── server/
+│   │       │   ├── config/
+│   │       │   │   └── db.js
+│   │       │   │
+│   │       │   ├── controllers/
+│   │       │   │   ├── authController.js
+│   │       │   │   ├── donorController.js
+│   │       │   │
+│   │       │   ├── models/
+│   │       │   │   ├── User.js
+│   │       │   │   ├── Donor.js
+│   │       │   │
+│   │       │   ├── routes/
+│   │       │   │   ├── authRoutes.js
+│   │       │   │   ├── donorRoutes.js
+│   │       │   │
+│   │       │   ├── middleware/
+│   │       │   │   ├── authMiddleware.js
+│   │       │   │
+│   │       │   ├── utils/
+│   │       │   ├── app.js
+│   │       │   └── server.js
+│   │       │
+│   │       ├── package.json
+│   │
+│   ├── admin/                  
+│       │
+│       ├── frontend/           
+│       │   ├── src/
+│       │   │   ├── pages/
+│       │   │   │   ├── Dashboard.jsx
+│       │   │   │   ├── Users.jsx
+│       │   │   │   ├── Requests.jsx
+│       │   │   │
+│       │   │   ├── components/
+│       │   │   ├── services/
+│       │   │   ├── App.jsx
+│       │   │
+│       │   ├── package.json
+│       │
+│       ├── backend/            
+│           ├── server/
+│           │   ├── routes/
+│           │   ├── controllers/
+│           │   ├── server.js
+│           │
+│           ├── package.json
+│
+├── package.json                
+├── README.md
 ---
 
 ## 10. Core Data Models
