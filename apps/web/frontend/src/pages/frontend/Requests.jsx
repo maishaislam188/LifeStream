@@ -11,7 +11,7 @@ export default function Requests() {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/requests");
+      const res = await axios.get("https://lifestream-3v6y.onrender.com/api/requests");
       setRequests(res.data);
     } catch (error) {
       console.error(error);
@@ -27,7 +27,7 @@ export default function Requests() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/requests/${id}`,
+        `https://lifestream-3v6y.onrender.com/api/requests/${id}`,
         { status },
         {
           headers: {

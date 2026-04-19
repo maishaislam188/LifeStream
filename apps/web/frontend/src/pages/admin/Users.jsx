@@ -13,7 +13,7 @@ export default function Users() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/admin/users",
+        "https://lifestream-3v6y.onrender.com/api/admin/users",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export default function Users() {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `http://localhost:5000/api/admin/users/${id}`,
+        `https://lifestream-3v6y.onrender.com/api/admin/users/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ export default function Users() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/admin/users/${user._id}`,
+        `https://lifestream-3v6y.onrender.com/api/admin/users/${user._id}`,
         { isAvailable: !user.isAvailable },
         {
           headers: {
