@@ -1,18 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/User');
-const authMiddleware = require('../middleware/auth');
+const User = require("../models/User");
+
+const Donor = require('../models/Donor');
 
 router.get('/', async (req, res) => {
   try {
-    const { bloodGroup, location } = req.query;
-    let query = { role: 'donor', isAvailable: true };
-    if (bloodGroup && bloodGroup !== '') query.bloodGroup = bloodGroup;
-    if (location && location !== '') query.location = { $regex: location, $options: 'i' };
-    const donors = await User.find(query).select('-password');
+    const donors = await User.find({
+      role: { $regex: /^donor$/i },
+      isAvailable: true // ✅ add this field in User model
+    });
+
     res.json(donors);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
