@@ -1,64 +1,47 @@
-import { Link } from "react-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FiMapPin, FiPhone } from "react-icons/fi";
 import { useNavigate } from "react-router";
 import heroImage from "../../assets/hero.jpeg";
 import Footer from "../../components/frontend/Footer";
 import Navbar from "../../components/frontend/Navbar";
 
-const donorsData = [
-  {
-    id: 1,
-    name: "Mahdi Rahman",
-    bloodGroup: "A+",
-    address: "Dhaka",
-    phone: "+880 1234 567890",
-    image: "https://img.freepik.com/premium-vector/male-profile-icon_1076610-16621.jpg",
-  },
-  {
-    id: 2,
-    name: "Nusrat Jahan",
-    bloodGroup: "B+",
-    address: "Chittagong",
-    phone: "+880 9876 543210",
-    image: "https://cdn1.iconfinder.com/data/icons/avatars-1-5/136/61-1024.png",
-  },
-  {
-    id: 3,
-    name: "Ali Hasan",
-    bloodGroup: "O-",
-    address: "Sylhet",
-    phone: "+880 1122 334455",
-    image: "https://cdn3.iconfinder.com/data/icons/avatars-collection/256/47-1024.png",
-  },
-  {
-    id: 4,
-    name: "Fatema Akter",
-    bloodGroup: "AB+",
-    address: "Rajshahi",
-    phone: "+880 5566 778899",
-    image: "https://cdn4.iconfinder.com/data/icons/business-conceptual-part1-1/513/business-woman-512.png",
-  },
-];
-
 export default function Donors() {
   const navigate = useNavigate();
 
-  // Input states (typing)
+  // Input states
   const [blood, setBlood] = useState("");
   const [location, setLocation] = useState("");
 
-  // Applied filters (after clicking search)
+  // Applied filters
   const [filterBlood, setFilterBlood] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
 
-  // Filter logic (ONLY uses applied filters)
+  // Donors from backend
+  const [donorsData, setDonorsData] = useState([]);
+
+  // Fetch donors
+  useEffect(() => {
+    const fetchDonors = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/donors");
+        setDonorsData(res.data);
+      } catch (err) {
+        console.error("Error fetching donors", err);
+      }
+    };
+
+    fetchDonors();
+  }, []);
+
+  // Filter logic
   const filteredDonors = donorsData.filter((donor) => {
-    const matchesBlood = filterBlood === "" || donor.bloodGroup === filterBlood;
+    const matchesBlood =
+      filterBlood === "" || donor.bloodGroup === filterBlood;
 
     const matchesLocation =
       filterLocation === "" ||
-      donor.address.toLowerCase().includes(filterLocation.toLowerCase());
+      donor.location?.toLowerCase().includes(filterLocation.toLowerCase());
 
     return matchesBlood && matchesLocation;
   });
@@ -88,11 +71,13 @@ export default function Donors() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 flex gap-8">
-        {/* Sidebar (FIXED WIDTH) */}
+
+        {/* Sidebar */}
         <div className="w-[280px] bg-white p-6 rounded-lg shadow-md sticky top-24 h-fit">
           <h2 className="text-xl font-bold mb-4 text-red-600">Search Donors</h2>
 
           <div className="flex flex-col gap-4">
+
             {/* Blood Group */}
             <div>
               <label className="block mb-1 font-semibold">Blood Group</label>
@@ -144,12 +129,15 @@ export default function Donors() {
             {filteredDonors.length > 0 ? (
               filteredDonors.map((donor) => (
                 <div
-                  key={donor.id}
+                  key={donor._id}
                   className="bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-md p-6 hover:shadow-xl transform hover:scale-105 transition duration-300"
                 >
                   <div className="flex justify-center mb-4">
                     <img
-                      src={donor.image}
+                      src={
+                        donor.image ||
+                        "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-870.jpg"
+                      }
                       alt={donor.name}
                       className="w-24 h-24 rounded-full border-4 border-red-600 object-cover"
                     />
@@ -167,13 +155,14 @@ export default function Donors() {
 
                   <p className="flex items-center justify-center text-gray-700">
                     <FiMapPin className="mr-2 text-red-500" />
-                    {donor.address}
+                    {donor.location || "N/A"}
                   </p>
 
                   <p className="flex items-center justify-center text-gray-700 mb-4">
                     <FiPhone className="mr-2 text-red-500" />
-                    {donor.phone}
+                    {donor.phone || "N/A"}
                   </p>
+
                   <a
                     href={`tel:${donor.phone}`}
                     className="block text-center bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
@@ -194,7 +183,7 @@ export default function Donors() {
             )}
           </div>
 
-          {/* Be a Donor Section */}
+          {/* Be a Donor */}
           <div className="mt-12 bg-red-50 rounded-lg shadow-md py-10 flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold text-red-600 mb-3">
               Want to Save Lives?

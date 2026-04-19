@@ -8,53 +8,6 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const navigate = useNavigate();
-
-  // ১. সব ইনপুট ডাটা রাখার জন্য State
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-    bloodGroup: "",
-  });
-
-  const [error, setError] = useState("");
-
-  // ২. ইনপুট হ্যান্ডেলার ফাংশন
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // ৩. ব্যাকএন্ডে ডাটা পাঠানোর ফাংশন
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    // পাসওয়ার্ড ম্যাচিং চেক
-    if (formData.password !== formData.confirmPassword) {
-      return setError("Passwords do not match!");
-    }
-
-    // টার্মস অ্যান্ড কন্ডিশন চেক
-    if (!isChecked) {
-      return setError("Please agree to our Terms & Privacy.");
-    }
-
-    try {
-      // আপনার ব্যাকএন্ডের সাইন-আপ রুটে ডাটা পাঠানো হচ্ছে
-      const res = await axios.post("http://localhost:5000/signup", formData);
-
-      if (res.data.success) {
-        alert("Registration Successful!");
-        navigate("/signin"); // সফল হলে লগইন পেজে নিয়ে যাবে
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed. Try again.");
-    }
-  };
 
   const navigate = useNavigate();
 
@@ -66,6 +19,9 @@ export default function SignUpForm() {
     confirmPassword: "",
     gender: "",
     bloodGroup: "",
+    location: "",   // ✅ added
+    phone: "",      // ✅ added
+    role: "patient",
   });
 
   const [error, setError] = useState("");
@@ -77,7 +33,6 @@ export default function SignUpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validation
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -88,54 +43,8 @@ export default function SignUpForm() {
       return;
     }
 
-    try {
-      const payload = {
-        name: formData.firstName + " " + formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        role: "patient",
-        bloodGroup: formData.bloodGroup,
-        gender: formData.gender,
-      };
-
-      await axios.post("http://localhost:5000/signup", payload);
-
-      navigate("/signin");
-
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    }
-  };
-
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-    bloodGroup: "",
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (!isChecked) {
-      setError("Please accept terms & conditions");
+    if (formData.role === "donor" && !formData.bloodGroup) {
+      setError("Donor must select blood group");
       return;
     }
 
@@ -144,63 +53,14 @@ export default function SignUpForm() {
         name: formData.firstName + " " + formData.lastName,
         email: formData.email,
         password: formData.password,
-        role: "patient",
+        role: formData.role,
         bloodGroup: formData.bloodGroup,
         gender: formData.gender,
+        location: formData.location, // ✅ added
+        phone: formData.phone,       // ✅ added
       };
 
-      await axios.post("http://localhost:5000/signup", payload);
-
-      navigate("/signin");
-
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    }
-  };
-
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-    bloodGroup: "",
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (!isChecked) {
-      setError("Please accept terms & conditions");
-      return;
-    }
-
-    try {
-      const payload = {
-        name: formData.firstName + " " + formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        role: "patient",
-        bloodGroup: formData.bloodGroup,
-        gender: formData.gender,
-      };
-
-      await axios.post("http://localhost:5000/signup", payload);
+      await axios.post("http://localhost:5000/api/auth/register", payload);
 
       navigate("/signin");
 
@@ -211,10 +71,8 @@ export default function SignUpForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
 
-        {/* Back */}
         <Link
           to="/"
           className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4"
@@ -223,7 +81,6 @@ export default function SignUpForm() {
           Back to home
         </Link>
 
-        {/* Title */}
         <h1 className="text-2xl font-bold text-center mb-2">
           Create Account
         </h1>
@@ -231,17 +88,39 @@ export default function SignUpForm() {
           Join and become a blood donor
         </p>
 
-        {/* Error */}
         {error && (
           <p className="text-red-500 text-sm text-center mb-3">
             {error}
           </p>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
 
-          {/* Name */}
+          {/* Role */}
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="role"
+                value="patient"
+                checked={formData.role === "patient"}
+                onChange={handleChange}
+              />
+              Patient
+            </label>
+
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="role"
+                value="donor"
+                checked={formData.role === "donor"}
+                onChange={handleChange}
+              />
+              Donor
+            </label>
+          </div>
+
           <div className="grid grid-cols-2 gap-3">
             <input
               type="text"
@@ -270,6 +149,22 @@ export default function SignUpForm() {
             required
           />
 
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -279,7 +174,10 @@ export default function SignUpForm() {
               className="w-full px-3 py-2 border rounded-md"
               required
             />
-            <span onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            >
               {showPassword ? <HiEye /> : <HiEyeOff />}
             </span>
           </div>
@@ -293,12 +191,14 @@ export default function SignUpForm() {
               className="w-full px-3 py-2 border rounded-md"
               required
             />
-            <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+            <span
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            >
               {showConfirmPassword ? <HiEye /> : <HiEyeOff />}
             </span>
           </div>
 
-          {/* Gender */}
           <select
             name="gender"
             onChange={handleChange}
@@ -311,12 +211,11 @@ export default function SignUpForm() {
             <option value="others">Others</option>
           </select>
 
-          {/* Blood Group */}
           <select
             name="bloodGroup"
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
-            required
+            required={formData.role === "donor"}
           >
             <option value="">Select Blood Group</option>
             <option value="A+">A+</option>
@@ -335,10 +234,11 @@ export default function SignUpForm() {
               checked={isChecked}
               onChange={() => setIsChecked(!isChecked)}
             />
-            <p className="text-sm text-gray-500">I agree to Terms & Privacy</p>
+            <p className="text-sm text-gray-500">
+              I agree to Terms & Privacy
+            </p>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
@@ -349,7 +249,9 @@ export default function SignUpForm() {
 
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
-          <Link to="/signin" className="text-red-600 font-medium">Sign In</Link>
+          <Link to="/signin" className="text-red-600 font-medium">
+            Sign In
+          </Link>
         </p>
 
       </div>

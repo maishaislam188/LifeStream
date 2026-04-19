@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoChevronBack } from "react-icons/io5";
-import axios from "axios";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +25,7 @@ export default function SignInForm() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/login",
+        "http://localhost:5000/api/auth/login",
         formData
       );
 
@@ -52,9 +51,15 @@ export default function SignInForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+
+      {/* Card */}
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
 
-        <Link to="/" className="inline-flex items-center text-sm text-gray-500 hover:text-red-600 mb-4">
+        {/* Back */}
+        <Link
+          to="/"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-red-600 mb-4"
+        >
           <IoChevronBack className="mr-1" />
           Back to home
         </Link>
@@ -84,8 +89,12 @@ export default function SignInForm() {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="info@gmail.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+              required
             />
           </div>
 
@@ -94,12 +103,18 @@ export default function SignInForm() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password *
             </label>
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                required
               />
+
               <span
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
@@ -111,61 +126,6 @@ export default function SignInForm() {
                 )}
               </span>
             </div>
-          </div>
-
-          {/* Gender */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Gender *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="others">Others</option>
-            </select>
-          </div>
-
-          {/* Blood Group */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Blood Group *
-            </label>
-            <select
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-            >
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
-          </div>
-
-          {/* Remember + Forgot */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={() => setIsChecked(!isChecked)}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              Keep me logged in
-            </label>
-
-            <Link
-              to="/reset-password"
-              className="text-sm text-red-600 hover:text-red-700"
-            >
-              Forgot password?
-            </Link>
           </div>
 
           {/* Submit */}
@@ -180,10 +140,7 @@ export default function SignInForm() {
         {/* Footer */}
         <p className="text-sm text-center text-gray-600 mt-6">
           Don’t have an account?{" "}
-          <Link
-            to="/signup"
-            className="text-red-600 font-medium hover:text-red-700"
-          >
+          <Link to="/signup" className="text-red-600 font-medium">
             Sign Up
           </Link>
         </p>
