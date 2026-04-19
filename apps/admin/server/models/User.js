@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   bloodGroup: { type: String, enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] },
   location: { type: String },
   phone: { type: String },
-  isAvailable: { type: Boolean, default: true }
+  isAvailable: { type: Boolean, default: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

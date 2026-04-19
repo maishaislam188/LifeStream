@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Donor = require('../models/Donor');
+const authMiddleware = require('../middleware/auth');
+
 
 // Register
 router.post('/register', async (req, res) => {
@@ -58,6 +61,30 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
+});
+
+// ================================
+// ✅ GET PROFILE
+// ================================
+router.get('/me', authMiddleware, async (req, res) => {
+  const user = await User.findById(req.user.id).select('-password');
+  res.json(user);
+});
+
+
+// ================================
+// ✅ UPDATE PROFILE
+// ================================
+router.put('/me', authMiddleware, async (req, res) => {
+  const { name, phone, location, isAvailable } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { name, phone, location, isAvailable },
+    { new: true }
+  );
+
+  res.json(user);
 });
 
 module.exports = router;
