@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import axios from "axios";
 import heroImage from "../../assets/hero.jpeg";
-import banner from "../../assets/banner.jpg";
+import banner from "../../assets/banner.avif";
 import Navbar from "../../components/frontend/Navbar";
 import Footer from "../../components/frontend/Footer";
 import EmergencyRequests from "../../components/EmergencyRequests";
@@ -157,7 +157,6 @@ export default function Home() {
 
       {/* Get Involved */}
       <section className="max-w-7xl mx-auto py-20 px-4">
-        <h3 className="text-3xl font-bold text-center mb-12">Get Involved</h3>
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <img
@@ -167,6 +166,7 @@ export default function Home() {
             />
           </div>
           <div>
+            <h3 className="text-3xl font-bold mb-4">Get Involved</h3>
             <p className="text-lg mb-4">
               Register as a donor and securely provide your details. Patients
               can request blood, but only after login.
