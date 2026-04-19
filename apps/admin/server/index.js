@@ -73,7 +73,7 @@ const createAdmin = async () => {
         email: "maishaislam@gmail.com",
       },
       {
-        name: "Tonu Sridey",
+        name: "Tonusri Dey",
         email: "tonusridey@gmail.com",
       },
     ];
