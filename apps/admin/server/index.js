@@ -67,22 +67,37 @@ mongoose
 // ================================
 const createAdmin = async () => {
   try {
-    const existingAdmin = await User.findOne({ email: "admin@gmail.com" });
+    const admins = [
+      {
+        name: "Maisha Islam",
+        email: "maishaislam@gmail.com",
+      },
+      {
+        name: "Tonu Sridey",
+        email: "tonusridey@gmail.com",
+      },
+    ];
 
-    if (!existingAdmin) {
-      const hashedPassword = await bcrypt.hash("12345678", 10);
+    const password = await bcrypt.hash("12345678", 10);
 
-      const admin = new User({
-        name: "Admin",
-        email: "admin@gmail.com",
-        password: hashedPassword,
-        role: "admin",
+    for (const adminData of admins) {
+      const existingAdmin = await User.findOne({
+        email: adminData.email,
       });
 
-      await admin.save();
-      console.log("✅ Admin created successfully!");
-    } else {
-      console.log("ℹ️ Admin already exists");
+      if (!existingAdmin) {
+        const admin = new User({
+          name: adminData.name,
+          email: adminData.email,
+          password,
+          role: "admin",
+        });
+
+        await admin.save();
+        console.log(`✅ Admin created: ${adminData.email}`);
+      } else {
+        console.log(`ℹ️ Already exists: ${adminData.email}`);
+      }
     }
   } catch (error) {
     console.error("❌ Error creating admin:", error.message);
