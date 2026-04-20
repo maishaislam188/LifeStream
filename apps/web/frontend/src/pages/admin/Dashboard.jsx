@@ -11,7 +11,7 @@ export default function Dashboard() {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "http://localhost:5000/api/admin/stats",
+          "https://lifestream-3v6y.onrender.com/api/admin/stats",
           {
             headers: {
               Authorization: `Bearer ${token}`,

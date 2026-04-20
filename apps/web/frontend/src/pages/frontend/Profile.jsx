@@ -12,7 +12,7 @@ export default function Profile() {
 
   // ================= FETCH PROFILE =================
   const fetchProfile = async () => {
-    const res = await axios.get("http://localhost:5000/api/auth/me", {
+    const res = await axios.get("https://lifestream-3v6y.onrender.com/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setUser(res.data);
@@ -21,7 +21,7 @@ export default function Profile() {
   // ================= FETCH MY REQUESTS =================
   const fetchMyRequests = async () => {
     const res = await axios.get(
-      "http://localhost:5000/api/requests/my-requests",
+      "https://lifestream-3v6y.onrender.com/api/requests/my-requests",
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setMyRequests(res.data);
@@ -30,7 +30,7 @@ export default function Profile() {
   // ================= FETCH MY DONATIONS =================
   const fetchMyDonations = async () => {
     const res = await axios.get(
-      "http://localhost:5000/api/requests/my-donations",
+      "https://lifestream-3v6y.onrender.com/api/requests/my-donations",
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setMyDonations(res.data);
@@ -54,7 +54,7 @@ export default function Profile() {
 
   // ================= UPDATE PROFILE =================
   const updateProfile = async () => {
-    await axios.put("http://localhost:5000/api/auth/me", user, {
+    await axios.put("https://lifestream-3v6y.onrender.com/api/auth/me", user, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -76,11 +76,10 @@ export default function Profile() {
           </div>
 
           <span
-            className={`px-4 py-1 rounded-full text-sm font-semibold ${
-              user.isAvailable
-                ? "bg-green-100 text-green-600"
-                : "bg-gray-200 text-gray-600"
-            }`}
+            className={`px-4 py-1 rounded-full text-sm font-semibold ${user.isAvailable
+              ? "bg-green-100 text-green-600"
+              : "bg-gray-200 text-gray-600"
+              }`}
           >
             {user.isAvailable ? "Available" : "Not Available"}
           </span>
@@ -90,33 +89,30 @@ export default function Profile() {
         <div className="flex gap-4 mb-6">
           <button
             onClick={() => setActiveTab("profile")}
-            className={`px-4 py-2 rounded ${
-              activeTab === "profile"
-                ? "bg-red-600 text-white"
-                : "bg-white shadow"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "profile"
+              ? "bg-red-600 text-white"
+              : "bg-white shadow"
+              }`}
           >
             Profile
           </button>
 
           <button
             onClick={() => setActiveTab("requests")}
-            className={`px-4 py-2 rounded ${
-              activeTab === "requests"
-                ? "bg-red-600 text-white"
-                : "bg-white shadow"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "requests"
+              ? "bg-red-600 text-white"
+              : "bg-white shadow"
+              }`}
           >
             My Requests
           </button>
 
           <button
             onClick={() => setActiveTab("donations")}
-            className={`px-4 py-2 rounded ${
-              activeTab === "donations"
-                ? "bg-red-600 text-white"
-                : "bg-white shadow"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "donations"
+              ? "bg-red-600 text-white"
+              : "bg-white shadow"
+              }`}
           >
             My Donations
           </button>

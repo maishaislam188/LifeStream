@@ -24,7 +24,7 @@ export default function Donors() {
   useEffect(() => {
     const fetchDonors = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/donors");
+        const res = await axios.get("https://lifestream-3v6y.onrender.com/api/donors");
         setDonorsData(res.data);
       } catch (err) {
         console.error("Error fetching donors", err);
@@ -136,7 +136,7 @@ export default function Donors() {
                     <img
                       src={
                         donor.image ||
-                        "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-870.jpg"
+                        "https://img.freepik.com/premium-vector/male-profile-icon_1076610-16621.jpg"
                       }
                       alt={donor.name}
                       className="w-24 h-24 rounded-full border-4 border-red-600 object-cover"

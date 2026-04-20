@@ -10,7 +10,7 @@ export default function MyRequests() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/requests/my-requests",
+        "https://lifestream-3v6y.onrender.com/api/requests/my-requests",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
