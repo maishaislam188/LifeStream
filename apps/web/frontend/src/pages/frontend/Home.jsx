@@ -76,47 +76,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Emergency Requests Section */}
-      <div className="bg-white py-10">
-        <div className="max-w-7xl mx-auto px-4">
-          <EmergencyRequests />
-          
-          {/* --- নতুন পোস্ট করার বাটন --- */}
-          <div className="mt-8 p-6 border-2 border-dashed border-red-200 rounded-xl bg-red-50 text-center">
-             <p className="text-gray-600 mb-4 font-medium">Do you need an emergency blood request? Post your request here.</p>
-             <button 
-               onClick={() => setShowModal(true)}
-               className="bg-red-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-red-700 transition shadow-md"
-             >
-               Post Emergency Request
-             </button>
-          </div>
-        </div>
-      </div>
-
-      {/* --- Emergency Request Modal (Pop-up Form) --- */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full relative">
-            <button 
-              onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-black text-xl"
-            >✕</button>
-            <h2 className="text-2xl font-bold text-red-600 mb-6 text-center">Emergency Blood Request</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input name="bloodGroup" placeholder="Blood Group (e.g. A+)" onChange={handleChange} required className="w-full p-2 border rounded" />
-              <input name="hospital" placeholder="Hospital Name" onChange={handleChange} required className="w-full p-2 border rounded" />
-              <input name="bagsNeeded" placeholder="Bags Needed" type="number" onChange={handleChange} required className="w-full p-2 border rounded" />
-              <input name="location" placeholder="Location" onChange={handleChange} required className="w-full p-2 border rounded" />
-              <input name="contact" placeholder="Contact Number" onChange={handleChange} required className="w-full p-2 border rounded" />
-              <button type="submit" className="w-full bg-red-600 text-white py-3 rounded font-bold hover:bg-red-700 transition">
-                Submit Post
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
+      
       {/* How It Works */}
       <section className="max-w-7xl mx-auto py-20 px-4">
         <h3 className="text-3xl font-bold text-center mb-12">How It Works</h3>
