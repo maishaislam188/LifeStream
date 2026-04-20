@@ -1,43 +1,10 @@
-import { useState } from "react";
 import { Link } from "react-router";
-import axios from "axios";
 import heroImage from "../../assets/hero.jpeg";
 import banner from "../../assets/banner.avif";
 import Navbar from "../../components/frontend/Navbar";
 import Footer from "../../components/frontend/Footer";
-import EmergencyRequests from "../../components/EmergencyRequests";
 
 export default function Home() {
-  // মডাল এবং ফর্ম ডেটার জন্য স্টেট
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-    bloodGroup: "",
-    hospital: "",
-    bagsNeeded: "",
-    location: "",
-    contact: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // ব্যাকএন্ডে ইমার্জেন্সি রিকোয়েস্ট সেভ করা হচ্ছে
-      const res = await axios.post("http://localhost:5000/emergency-requests", formData);
-      if (res.data.success) {
-        alert("Emergency Request Posted Successfully!");
-        setShowModal(false);
-        window.location.reload(); // নতুন পোস্ট দেখানোর জন্য রিফ্রেশ
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong!");
-    }
-  };
-
   return (
     <div className="font-sans text-gray-900">
       {/* Navbar */}
@@ -57,7 +24,8 @@ export default function Home() {
             Donate Blood, Save Lives
           </h2>
           <p className="text-white mb-6 text-lg">
-            Join our community. Become a donor or request blood for those in need.
+            Join our community. Become a donor or request blood for those in
+            need.
           </p>
           <div className="flex justify-center gap-4">
             <Link
@@ -76,7 +44,6 @@ export default function Home() {
         </div>
       </section>
 
-      
       {/* How It Works */}
       <section className="max-w-7xl mx-auto py-20 px-4">
         <h3 className="text-3xl font-bold text-center mb-12">How It Works</h3>
