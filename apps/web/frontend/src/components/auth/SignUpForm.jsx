@@ -60,7 +60,7 @@ export default function SignUpForm() {
         phone: formData.phone,       // ✅ added
       };
 
-      await axios.post("http://localhost:5000/api/auth/register", payload);
+      await axios.post("https://lifestream-3v6y.onrender.com/api/auth/register", payload);
 
       navigate("/signin");
 

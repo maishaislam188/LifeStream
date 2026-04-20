@@ -31,7 +31,7 @@ export default function RequestBlood() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/api/requests",
+        "https://lifestream-3v6y.onrender.com/api/requests",
         formData,
         {
           headers: {
@@ -51,7 +51,7 @@ export default function RequestBlood() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      
+
       {/* ✅ Navbar fixed at top */}
       <Navbar />
 

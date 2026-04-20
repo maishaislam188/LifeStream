@@ -13,7 +13,7 @@ export default function Requests() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/admin/requests",
+        "https://lifestream-3v6y.onrender.com/api/admin/requests",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export default function Requests() {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `http://localhost:5000/api/admin/requests/${id}`,
+        `https://lifestream-3v6y.onrender.com/api/admin/requests/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -10,7 +10,7 @@ export default function MyDonations() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/requests/my-donations",
+        "https://lifestream-3v6y.onrender.com/api/requests/my-donations",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
